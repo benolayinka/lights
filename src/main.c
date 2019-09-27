@@ -81,27 +81,43 @@ void main(void)
 	ExpanderPWMSet(&pwm, 8, 0);
 	ExpanderPWMSetFadeRate(&pwm, 8, 10, 10);
 
-	// ExpanderInit(EXPANDER_A);
-	// ExpanderPinMode(EXPANDER_A, 8, OUTPUT);
-	// ExpanderPinMode(EXPANDER_A, 9, OUTPUT);
+	ExpanderPWMSet(&pwm, 9, 0);
+	ExpanderPWMSetFadeRate(&pwm, 9, 20, 20);
+
+	ExpanderPWMSet(&pwm, 10, 0);
+	ExpanderPWMSetFadeRate(&pwm, 10, 30, 30);
 
 	while (1) 
 	{
 		static bool on = false;
 		static uint16_t counter = 0;
-		counter++;
 
 		if(0==counter)
 		{
-			printk("loop");
 			if(on)
 				ExpanderPWMSet(&pwm, 8, 0);
 			else
 				ExpanderPWMSet(&pwm, 8, 0xff);
+		}
+		else if(20000 == counter)
+		{
+			if(on)
+				ExpanderPWMSet(&pwm, 9, 0);
+			else
+				ExpanderPWMSet(&pwm, 9, 0xff);
+		}
+		else if(40000 == counter)
+		{
+			if(on)
+				ExpanderPWMSet(&pwm, 10, 0);
+			else
+				ExpanderPWMSet(&pwm, 10, 0xff);
 
 			on = !on;
 		}
-		
+
+		counter++;
+
 		ExpanderPWMUpdate(&pwm);
 	}
 }
